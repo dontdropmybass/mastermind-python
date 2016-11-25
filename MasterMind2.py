@@ -1,5 +1,6 @@
 import random
 import os
+import MastermindDBConn
 
 def clear():
     try:
@@ -23,14 +24,14 @@ def doGuess(guess):
     b = True
     if len(currentGuess) != 4:
         b = False
-    for i in range(4):
+    for i in range(len(currentGuess)):
         if not currentGuess[i].isdigit():
             b = False
     if not b:
         input("Guesses must be 4 numbers in length. Press enter to continue...")
         clear()
         doGuess(guess)
-    for i in range(4):
+    for i in range(len(currentGuess)):
         if int(currentGuess[i]) == code[i]:
             correctPos += 1
         if int(currentGuess[i]) in code:
