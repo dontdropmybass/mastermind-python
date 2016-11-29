@@ -1,8 +1,7 @@
 #!/usr/bin/python
 import sqlite3
 
-def Open():
-    conn= sqlite3.connect('HighScores.sqlite')
+conn= sqlite3.connect('HighScores.sqlite')
 
 def Select():
     #Select Statement
@@ -19,13 +18,18 @@ def Insert():
     conn.execute("INSERT INTO Scores (Name,Stage,Time) VALUES('{name}','{stage}','{time}')".\
             format(name=name, stage = Stage, time = Time))
     conn.commit()
+
+def Insert(Name, Stage, Time):
+    conn.execute("INSERT INTO Scores (Name,Stage,Time) VALUES('{name}','{stage}','{time}')".\
+                 format(name=Name, stage = Stage, time = Time))
+    conn.commit()
    
 def Close():
     #Close Statement
     conn.close()
     
-//Sample Run
-conn= sqlite3.connect('HighScores.sqlite')
-Select()
-Insert()
-Close()
+#//Sample Run (slashes because ben forgot python)
+#conn= sqlite3.connect('HighScores.sqlite')
+#Select()
+#Insert()
+#Close()

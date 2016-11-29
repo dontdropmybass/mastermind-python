@@ -1,6 +1,7 @@
 import random
 import os
-import MastermindDBConn
+import time
+import MastermindDBConn as db
 
 def clear():
     try:
@@ -29,6 +30,7 @@ def doGuess(guess):
             b = False
     if not b:
         input("Guesses must be 4 numbers in length. Press enter to continue...")
+        currentGuess = ""
         clear()
         doGuess(guess)
     for i in range(len(currentGuess)):
@@ -45,11 +47,22 @@ def doGuess(guess):
 # this is the game you dick
 name = input("Welcome to mastermind, please enter your name to start: ")
 code = genCode()
-print(code) # TODO: remove
-
+start = time.time()
 while guess < 10 and game:
     clear()
     guess += 1
     game = doGuess(guess)
-    
-print("You won in "+str(guess)+" turns! Good job!")
+
+if not game:
+    print("You won in "+str(guess)+" turns! Good job!\n\n")
+    print("--------------------------------------------------\n\n")
+    db.Insert(name,str(guess),str(time.time()-start))
+    db.Select()
+else:
+    print("Sorry, you fail.")
+    print("The correct combo is: ")
+    print(code)
+    print("\n\n--------------------------------------------------\n\n")
+    db.Select()
+input("\n\nPress enter to quit")
+db.Close()
