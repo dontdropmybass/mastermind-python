@@ -4,7 +4,7 @@ import time
 import MastermindDBConn as db
 
 def clear():
-    # this doesn't work
+    # this works on windows
     try:
         return os.system("cls") + os.system("clear")
     except:
@@ -38,7 +38,7 @@ def doGuess(guess):
         # show them they're wrong and try again
         input("Guesses must be 4 numbers in length. Press enter to continue...")
         currentGuess = ""
-        clear()
+        # clear()
         doGuess(guess)
     for i in range(len(currentGuess)):
         # check the code and show them how many
@@ -62,9 +62,9 @@ name = input("Welcome to mastermind, please enter your name to start: ")
 code = genCode()
 # find out what time it is right now
 start = time.time()
+clear()
 # for ten guesses,
 while guess < 10 and game:
-    clear()
     guess += 1
     # do the guess
     game = doGuess(guess)
