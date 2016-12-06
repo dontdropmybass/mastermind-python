@@ -17,8 +17,13 @@ guess = 0
 game = True
 
 def genCode():
+    code = []
     # generated a random code
-    code = [random.randrange(10),random.randrange(10),random.randrange(10),random.randrange(10)]
+    while len(code)<4:
+        n = random.randrange(10)
+        if n in code:
+            continue
+        code.append(n)
     return code
 
 def doGuess(guess):
@@ -40,13 +45,16 @@ def doGuess(guess):
         currentGuess = ""
         # clear()
         doGuess(guess)
+    nguess = []
     for i in range(len(currentGuess)):
         # check the code and show them how many
         # numbers they guessed correctly
         if int(currentGuess[i]) == code[i]:
             correctPos += 1
         if int(currentGuess[i]) in code:
-            inCode += 1
+            if currentGuess[i] not in nguess:
+                nguess.append(currentGuess[i])
+                inCode += 1
     print("You guessed "+str(inCode)+" numbers in the code, and "+str(correctPos)+" in the correct position.")
     if correctPos == 4:
         # if they guess the code correctly,
@@ -56,6 +64,7 @@ def doGuess(guess):
         return True
 
 ##### Main Game Code
+clear()
 # ask for their name
 name = input("Welcome to mastermind, please enter your name to start: ")
 # generate the code
@@ -63,6 +72,9 @@ code = genCode()
 # find out what time it is right now
 start = time.time()
 clear()
+# print instructions
+print("Enter 4 digits, between 0 and 9, with no spaces in between. (like 0123)")
+print("No numbers will be in the code twice.")
 # for ten guesses,
 while guess < 10 and game:
     guess += 1
